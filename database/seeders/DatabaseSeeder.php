@@ -14,11 +14,39 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        User::truncate();
+        Architect::truncate();
+        Flat::truncate();
+        Building::truncate();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-    }
+        User::factory(3)->create();
+
+        $architect1 = Architect::factory()->create();
+        $architect2 = Architect::factory()->create();
+        $architect3 = Architect::factory()->create();
+        $architect4 = Architect::factory()->create();
+
+        $flat1 = Flat::factory()->create();
+        $flat2 = Flat::factory()->create();
+        $flat3 = Flat::factory()->create();
+        $flat4 = Flat::factory()->create();
+
+
+        Building::factory()->create([
+            'architect_id' => $architect1->id,
+            'flat_id' => $flat1->id
+        ]);
+        Building::factory()->create([
+            'architect_id' => $architect2->id,
+            'flat_id' => $flat2->id
+        ]);
+        Building::factory()->create([
+            'architect_id' => $architect3->id,
+            'flat_id' => $flat3->id
+        ]);
+        Building::factory()->create([
+            'architect_id' => $architect4->id,
+            'flat_id' => $flat4->id
+        ]);
+}
 }
