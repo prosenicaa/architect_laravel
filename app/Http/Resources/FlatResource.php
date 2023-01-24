@@ -12,8 +12,16 @@ class FlatResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+
+    public static $wrap = 'flat';
+
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'floor' => $this->resource->floor,
+            'max_people' => $this->resource->max_people,
+            'balcony' => $this->resource->balcony,
+            'price' => $this->resource->price
+        ];
     }
 }
