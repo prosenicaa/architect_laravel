@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ArchitectCollection;
+use App\Http\Resources\ArchitectResource;
 use App\Models\Architect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ArchitectController extends Controller
 {
@@ -14,7 +17,8 @@ class ArchitectController extends Controller
      */
     public function index()
     {
-        //
+        $architects = Architect::all();
+        return response()->json(new ArchitectCollection($architects));
     }
 
     /**
@@ -35,7 +39,25 @@ class ArchitectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:architects',
+            'skills' => 'required|string|max:255',
+            'title' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $architects = Architect::create([
+            'name' => $request->name,
+            'skills' => $request->skills,
+            'title' => $request->title,
+        ]);
+
+        return response()->json([
+            'Architect created' => new ArchitectResource($architect)
+        ]);
     }
 
     /**
@@ -44,9 +66,13 @@ class ArchitectController extends Controller
      * @param  \App\Models\Architect  $architect
      * @return \Illuminate\Http\Response
      */
-    public function show(Architect $architect)
+    public function show($architect_id)
     {
-        //
+        $architect = Architect::find($architect_id);
+        if (is_null($architect)) {
+            return response()->json('Architect not found', 404);
+        }
+        return response()->json(new ArchitectResource($architect));
     }
 
     /**
@@ -69,7 +95,25 @@ class ArchitectController extends Controller
      */
     public function update(Request $request, Architect $architect)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:architects',
+            'skills' => 'required|string|max:255',
+            'title' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $architect->name = $request->name;
+        $architect->skills = $request->skills;
+        $architect->title = $request->title;
+
+        $architect->save();
+
+        return response()->json([
+            'Architect updated' => new ArchitectResource($architect)
+        ]);
     }
 
     /**
@@ -80,6 +124,8 @@ class ArchitectController extends Controller
      */
     public function destroy(Architect $architect)
     {
-        //
+        $architect->delete();
+
+        return response()->json('Architect deleted');
     }
 }
