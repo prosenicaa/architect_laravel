@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Building;
+use App\Models\Flat;
+use App\Models\Architect;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +18,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        
         User::truncate();
         Architect::truncate();
         Flat::truncate();

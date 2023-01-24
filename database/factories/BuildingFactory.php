@@ -19,7 +19,7 @@ class BuildingFactory extends Factory
         return [
             'address' => fake()->streetAddress(),
             'city' => fake()->city(),
-            'date_built' => fake()->dateTimeBetween('-5 years', '+5 years')
+            'date_built' => fake()->dateTimeBetween('now', '+5 years')
         ];
     }
 }
