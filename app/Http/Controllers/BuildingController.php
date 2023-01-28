@@ -20,7 +20,7 @@ class BuildingController extends Controller
     public function index()
     {
         $buildings = Building::all();
-        return response()->json(new BuildingtCollection($buildings));
+        return response()->json(new BuildingCollection($buildings));
     }
 
     /**
