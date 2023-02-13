@@ -49,7 +49,7 @@ class ArchitectController extends Controller
             return response()->json($validator->errors());
         }
 
-        $architects = Architect::create([
+        $architect = Architect::create([
             'name' => $request->name,
             'skills' => $request->skills,
             'title' => $request->title,

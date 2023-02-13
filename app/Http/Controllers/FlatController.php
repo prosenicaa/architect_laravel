@@ -110,7 +110,7 @@ class FlatController extends Controller
 
         $flat->floor = $request->floor;
         $flat->max_people = $request->max_people;
-        $flat->balcony = $request->address;
+        $flat->balcony = $request->balcony;
         $flat->price = $request->price;
 
         $flat->save();
